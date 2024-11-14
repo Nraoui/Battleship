@@ -5,15 +5,211 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/ocean_background"
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/tvGameStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/status_background"
+        android:elevation="4dp"
+        android:paddingHorizontal="24dp"
+        android:paddingVertical="12dp"
+        android:text="Player 1's Turn"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/boardsContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        app:layout_constraintTop_toBottomOf="@id/tvGameStatus"
+        app:layout_constraintBottom_toTopOf="@id/statsContainer">
+
+        <!-- Player 1 Board -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/player1BoardContainer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            app:cardBackgroundColor="#80FFFFFF"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvPlayer1Name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:text="Player 1"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <GridLayout
+                    android:id="@+id/player1Grid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:columnCount="10"
+                    android:rowCount="10" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Player 2 Board -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/player2BoardContainer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            app:cardBackgroundColor="#80FFFFFF"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvPlayer2Name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:text="Player 2"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <GridLayout
+                    android:id="@+id/player2Grid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:columnCount="10"
+                    android:rowCount="10" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/statsContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardBackgroundColor="#80FFFFFF"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="4dp"
+        app:layout_constraintBottom_toTopOf="@id/btnNewGame">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:gravity="center">
+
+            <!-- Player 1 Stats -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginEnd="32dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Player 1"
+                    android:textStyle="bold"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/tvPlayer1Hits"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_hit"
+                    android:drawablePadding="8dp"
+                    android:text="Hits: 0"
+                    android:textColor="#006400" />
+
+                <TextView
+                    android:id="@+id/tvPlayer1Misses"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_miss"
+                    android:drawablePadding="8dp"
+                    android:text="Misses: 0"
+                    android:textColor="#8B0000" />
+            </LinearLayout>
+
+            <!-- Player 2 Stats -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Player 2"
+                    android:textStyle="bold"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/tvPlayer2Hits"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_hit"
+                    android:drawablePadding="8dp"
+                    android:text="Hits: 0"
+                    android:textColor="#006400" />
+
+                <TextView
+                    android:id="@+id/tvPlayer2Misses"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_miss"
+                    android:drawablePadding="8dp"
+                    android:text="Misses: 0"
+                    android:textColor="#8B0000" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnNewGame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:paddingHorizontal="32dp"
+        android:paddingVertical="12dp"
+        android:backgroundTint="#B1BBD3"
+        android:textColor="#230648"
+        android:text="New Game"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        app:cornerRadius="24dp"
+        app:elevation="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
