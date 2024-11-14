@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace = "com.dam2024m8uf2.battleship"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.dam2024m8uf2.battleship"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 

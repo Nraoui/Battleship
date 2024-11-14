@@ -6,10 +6,14 @@ import java.util.List;
 public class Board {
     private Cell[][] cells;
     private List<Ship> ships;
+    private int hitsCount;  // Count of hits
+    private int missesCount;  // Count of misses
 
     public Board(int size) {
         cells = new Cell[size][size];
         ships = new ArrayList<>();
+        hitsCount = 0;
+        missesCount = 0;
         initializeCells();
     }
 
@@ -28,10 +32,26 @@ public class Board {
     public boolean attackCell(int x, int y) {
         Cell cell = cells[x][y];
         cell.markHit();
-        return ships.stream().anyMatch(ship -> ship.isHit(cell));
+        if (ships.stream().anyMatch(ship -> ship.isHit(cell))) {
+            hitsCount++;  // Increment hits if it's a hit
+            return true;
+        } else {
+            missesCount++;  // Increment misses if it's a miss
+            return false;
+        }
     }
 
     public boolean allShipsSunk() {
         return ships.stream().allMatch(Ship::isSunk);
+    }
+
+    // Method to get the number of hits on the board
+    public int getHits() {
+        return hitsCount;
+    }
+
+    // Method to get the number of misses on the board
+    public int getMisses() {
+        return missesCount;
     }
 }
