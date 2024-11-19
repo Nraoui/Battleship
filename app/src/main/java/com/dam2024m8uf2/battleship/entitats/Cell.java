@@ -1,5 +1,7 @@
 package com.dam2024m8uf2.battleship.entitats;
 
+import java.util.Map;
+
 public class Cell {
     private int x, y;
     private boolean hit;
@@ -25,4 +27,13 @@ public class Cell {
         Cell cell = (Cell) obj;
         return x == cell.x && y == cell.y;
     }
+    // Convert Cell state to a Map for Firestore
+    public Map<String, Object> getState() {
+        return Map.of(
+                "x", x,
+                "y", y,
+                "hit", hit
+        );
+    }
+
 }

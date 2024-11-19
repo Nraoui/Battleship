@@ -2,6 +2,8 @@ package com.dam2024m8uf2.battleship.entitats;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Board {
     private Cell[][] cells;
@@ -29,6 +31,7 @@ public class Board {
         ships.add(ship);
     }
 
+
     public boolean attackCell(int x, int y) {
         Cell cell = cells[x][y];
         cell.markHit();
@@ -54,4 +57,24 @@ public class Board {
     public int getMisses() {
         return missesCount;
     }
+    // Convert Board state to a Map for Firestore
+    public Map<String, Object> getState() {
+        return Map.of(
+                "hitsCount", hitsCount,
+                "missesCount", missesCount,
+                "ships", ships.stream().map(Ship::getState).collect(Collectors.toList()),
+                "cells", getCellsState()
+        );
+    }
+
+    private List<Map<String, Object>> getCellsState() {
+        List<Map<String, Object>> cellStates = new ArrayList<>();
+        for (Cell[] row : cells) {
+            for (Cell cell : row) {
+                cellStates.add(cell.getState());
+            }
+        }
+        return cellStates;
+    }
+
 }

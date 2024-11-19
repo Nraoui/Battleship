@@ -6,22 +6,20 @@ import com.dam2024m8uf2.battleship.entitats.Ship
 import java.util.Random
 
 class JocManager private constructor() {
-    private val playerBoard: Board = Board(10)
-    private val machineBoard: Board = Board(10)
+    private val playerBoard: Board = Board(3)
+    private val machineBoard: Board = Board(3)
     private val random: Random = Random()
 
     init {
         setupShips() // Initialize the ships for both boards
     }
     private fun setupShips() {
-        // Example ship placements on 10x10 grid. Adjust positions as needed.
-        playerBoard.addShip(Ship(2, listOf(Cell(0, 0), Cell(0, 1))))
-        playerBoard.addShip(Ship(3, listOf(Cell(1, 0), Cell(1, 1), Cell(1, 2))))
-        playerBoard.addShip(Ship(4, listOf(Cell(2, 2), Cell(2, 3), Cell(2, 4), Cell(2, 5))))
+        // Adjusted ship placements for a 3x3 grid. Only ships of size 1x2 or 1x3 can fit.
+        playerBoard.addShip(Ship(2, listOf(Cell(0, 0), Cell(0, 1))))  // 1x2 ship
+        playerBoard.addShip(Ship(3, listOf(Cell(1, 0), Cell(1, 1), Cell(1, 2))))  // 1x3 ship
 
-        machineBoard.addShip(Ship(2, listOf(Cell(5, 5), Cell(5, 6))))
-        machineBoard.addShip(Ship(3, listOf(Cell(6, 4), Cell(6, 5), Cell(6, 6))))
-        machineBoard.addShip(Ship(4, listOf(Cell(7, 3), Cell(7, 4), Cell(7, 5), Cell(7, 6))))
+        machineBoard.addShip(Ship(2, listOf(Cell(1, 0), Cell(1, 1))))  // 1x2 ship
+        machineBoard.addShip(Ship(3, listOf(Cell(0, 0), Cell(0, 1), Cell(0, 2))))  // 1x3 ship
     }
 
     fun playerAttack(x: Int, y: Int): Boolean {
@@ -29,8 +27,8 @@ class JocManager private constructor() {
     }
 
     fun machineAttack(): Boolean {
-        val x = random.nextInt(10)
-        val y = random.nextInt(10)
+        val x = random.nextInt(3)  // Random x from 0 to 2
+        val y = random.nextInt(3)  // Random y from 0 to 2
         return playerBoard.attackCell(x, y)
     }
 
@@ -56,6 +54,17 @@ class JocManager private constructor() {
     // Get the number of misses for Player 2 (machine)
     fun getMachineMisses(): Int {
         return machineBoard.getMisses()
+    }
+    // Method to serialize the game state to a Map<String, Any>
+    fun getGameStateMap(): Map<String, Any> {
+        return mapOf(
+            "playerBoard" to playerBoard.getState(),
+            "machineBoard" to machineBoard.getState(),
+            "playerHits" to getPlayerHits(),
+            "playerMisses" to getPlayerMisses(),
+            "machineHits" to getMachineHits(),
+            "machineMisses" to getMachineMisses()
+        )
     }
     companion object {
         @Volatile
